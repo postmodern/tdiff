@@ -1,0 +1,17 @@
+name: tdiff
+version: 0.1.0
+summary: Calculates the differences between two tree-like structures.
+description:
+  Calculates the differences between two tree-like structures. Similar to
+  Rubys builtin TSort.
+ 
+license: MIT
+authors: Postmodern
+email: postmodern.mod3@gmail.com
+homepage: http://github.com/postmodern/tdiff
+has_yard: true
+
+development_dependencies:
+  ore-tasks: ~> 0.2.0
+  rspec: ~> 2.1.0
+  yard: ~> 0.6.0
