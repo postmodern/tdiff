@@ -8,7 +8,8 @@ module TDiff
   # @yield [child]
   #   The given block will be passed each child of the parent node.
   #
-  def tdiff_each_child(node)
+  def tdiff_each_child(node,&block)
+    node.each(&block) if node.kind_of?(Enumerable)
   end
 
   #
