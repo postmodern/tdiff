@@ -46,8 +46,8 @@ module TDiff
   # @return [Enumerator]
   #   If no block is given, an Enumerator object will be returned.
   #
-  def tdiff(tree)
-    return enum_for(:tdiff,tree) unless block_given?
+  def tdiff(tree,&block)
+    return enum_for(:tdiff,tree) unless block
 
     unless tdiff_equal(self,tree)
       yield '-', self
@@ -89,7 +89,7 @@ module TDiff
     end
 
     unchanged.each do |original_tree,new_tree|
-      tdiff(original_tree,new_tree)
+      tdiff(original_tree,new_tree,&block)
     end
 
     return self
