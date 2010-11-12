@@ -24,7 +24,7 @@ module TDiff
   #   Specifies whether the two nodes are equal.
   #
   def tdiff_equal(original_node,new_node)
-    false
+    original_node == new_node
   end
 
   #
