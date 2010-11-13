@@ -12,6 +12,8 @@ module.
 
 ## Examples
 
+Diff two HTML documents:
+
     require 'nokogiri'
     require 'tdiff'
 
@@ -43,6 +45,13 @@ module.
     doc1.tdiff(doc2) do |change,node|
       puts "#{change} #{node.to_html}".ljust(30) + node.path
     end
+
+Output:
+
+    - three                       /html/body/div/p[2]/text()
+    + two                         /html/body/div/p[2]/text()
+    +                             /html/body/div/text()[2]
+    + <p>three</p>                /html/body/div/p[3]
 
 ## Install
 
