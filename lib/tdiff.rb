@@ -1,3 +1,5 @@
+require 'pp'
+
 module TDiff
   #
   # Default method which will enumerate over every child of a parent node.
@@ -56,47 +58,58 @@ module TDiff
       return self
     end
 
-    unchanged = {}
+    c = Hash.new { |hash,key| hash[key] = Hash.new(0) }
+    x = enum_for(:tdiff_each_child,self)
+    y = enum_for(:tdiff_each_child,tree)
 
-    tdiff_each_child(self) do |original_node|
-      tdiff_each_child(tree) do |new_node|
-        # the new node must not be claimed yet
-        unless unchanged.values.include?(new_node)
-          if tdiff_equal(original_node,new_node)
-            # the original node was found in the new sub-tree
-            unchanged[original_node] = new_node
-            break
-          end
+    x.each_with_index do |x_node,i|
+      y.each_with_index do |y_node,j|
+        c[i][j] = if tdiff_equal(x_node,y_node)
+                    c[i-1][j-1] + 1
+                  else
+                    if c[i][j-1] > c[i-1][j]
+                      c[i][j-1]
+                    else
+                      c[i-1][j]
+                    end
+                  end
+      end
+    end
+
+    pp c
+
+    changes = []
+
+    x_backtrack = x.reverse_each.each_with_index
+    y_backtrack = y.reverse_each.each_with_index
+
+    x_node, i = x_backtrack.next
+    y_node, j = y_backtrack.next
+
+    loop do
+      if tdiff_equal(x_node,y_node)
+        break if (i == 0 && j == 0)
+
+        x_node, i = x_backtrack.next
+        y_node, j = y_backtrack.next
+      else
+        if (j > 0 && (i == 0 || c[i][j-1] >= c[i-1][j]))
+          changes.unshift(['+', y_node])
+
+          y_node, j = y_backtrack.next
+        elsif (i > 0 && (j == 0 || c[i][j-1] < c[i-1][j]))
+          changes.unshift(['-', x_node])
+
+          x_node, i = x_backtrack.next
         end
       end
     end
 
-    # recurse down into unchanged nodes
-    unchanged.each do |original_tree,new_tree|
-      original_tree.tdiff(new_tree,&block)
-    end
-
-    changes = []
-
-    # add the original nodes that were removed
-    enum_for(:tdiff_each_child,self).each_with_index do |node,index|
-      unless unchanged.keys.include?(node)
-        changes << [index, '-', node]
-      end
-    end
-
-    # add the new nodes that were added
-    enum_for(:tdiff_each_child,tree).each_with_index do |node,index|
-      unless unchanged.values.include?(node)
-        changes << [index, '+', node]
-      end
-    end
+    # explicitly discard the c matrix
+    c = nil
 
     # sequentially iterate over the changed nodes
-    changes.sort_by { |index,state,node| index }.each do |index,state,node|
-      yield state, node
-    end
-
+    changes.each(&block)
     return self
   end
 end
