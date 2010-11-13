@@ -89,7 +89,7 @@ module TDiff
     end
 
     unchanged.each do |original_tree,new_tree|
-      tdiff(original_tree,new_tree,&block)
+      original_tree.tdiff(new_tree,&block)
     end
 
     return self
