@@ -70,6 +70,10 @@ module TDiff
       end
     end
 
+    unchanged.each do |original_tree,new_tree|
+      original_tree.tdiff(new_tree,&block)
+    end
+
     changes = []
 
     enum_for(:tdiff_each_child,self).each_with_index do |node,index|
@@ -86,10 +90,6 @@ module TDiff
 
     changes.sort_by { |index,state,node| index }.each do |index,state,node|
       yield state, node
-    end
-
-    unchanged.each do |original_tree,new_tree|
-      original_tree.tdiff(new_tree,&block)
     end
 
     return self
