@@ -49,6 +49,7 @@ module TDiff
   def tdiff(tree,&block)
     return enum_for(:tdiff,tree) unless block
 
+    # check if the nodes differ
     unless tdiff_equal(self,tree)
       yield '-', self
       yield '+', tree
@@ -70,24 +71,28 @@ module TDiff
       end
     end
 
+    # recurse down into unchanged nodes
     unchanged.each do |original_tree,new_tree|
       original_tree.tdiff(new_tree,&block)
     end
 
     changes = []
 
+    # add the original nodes that were removed
     enum_for(:tdiff_each_child,self).each_with_index do |node,index|
       unless unchanged.keys.include?(node)
         changes << [index, '-', node]
       end
     end
 
+    # add the new nodes that were added
     enum_for(:tdiff_each_child,tree).each_with_index do |node,index|
       unless unchanged.values.include?(node)
         changes << [index, '+', node]
       end
     end
 
+    # sequentially iterate over the changed nodes
     changes.sort_by { |index,state,node| index }.each do |index,state,node|
       yield state, node
     end
