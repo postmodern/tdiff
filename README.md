@@ -42,16 +42,20 @@ Diff two HTML documents:
     doc1 = Nokogiri::HTML('<div><p>one</p> <p>three</p></div>')
     doc2 = Nokogiri::HTML('<div><p>one</p> <p>two</p> <p>three</p></div>')
 
-    doc1.tdiff(doc2) do |change,node|
-      puts "#{change} #{node.to_html}".ljust(30) + node.path
+    doc1.at('div').tdiff(doc2.at('div')) do |change,node|
+      puts "#{change} #{node.to_html}".ljust(30) + node.parent.path
     end
 
 Output:
 
-    - three                       /html/body/div/p[2]/text()
-    + two                         /html/body/div/p[2]/text()
-    +                             /html/body/div/text()[2]
-    + <p>three</p>                /html/body/div/p[3]
+    + <p>one</p>                  /html/body/div
+    +                             /html/body/div
+      <p>one</p>                  /html/body/div
+                                  /html/body/div
+      <p>three</p>                /html/body/div
+    - one                         /html/body/div/p[1]
+    + two                         /html/body/div/p[2]
+      three                       /html/body/div/p[2]
 
 ## Install
 
