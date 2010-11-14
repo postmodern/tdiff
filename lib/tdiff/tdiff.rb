@@ -66,8 +66,8 @@ module TDiff
     y = enum_for(:tdiff_each_child,tree)
 
     x.each_with_index do |xi,i|
-      y.each_with_index do |yi,j|
-        c[i][j] = if tdiff_equal(xi,yi)
+      y.each_with_index do |yj,j|
+        c[i][j] = if tdiff_equal(xi,yj)
                     c[i-1][j-1] + 1
                   else
                     if c[i][j-1] > c[i-1][j]
@@ -95,20 +95,20 @@ module TDiff
     }
 
     xi, i = next_child[x_backtrack]
-    yi, j = next_child[y_backtrack]
+    yj, j = next_child[y_backtrack]
 
     until (i == -1 && j == -1)
-      if (i != -1 && j != -1 && tdiff_equal(xi,yi))
+      if (i != -1 && j != -1 && tdiff_equal(xi,yj))
         changes.unshift [' ', xi]
-        unchanged.unshift [xi, yi]
+        unchanged.unshift [xi, yj]
 
         xi, i = next_child[x_backtrack]
-        yi, j = next_child[y_backtrack]
+        yj, j = next_child[y_backtrack]
       else
         if (j >= 0 && (i == -1 || c[i][j-1] >= c[i-1][j]))
-          changes.unshift ['+', yi]
+          changes.unshift ['+', yj]
 
-          yi, j = next_child[y_backtrack]
+          yj, j = next_child[y_backtrack]
         elsif (i >= 0 && (j == -1 || c[i][j-1] < c[i-1][j]))
           changes.unshift ['-', xi]
 
