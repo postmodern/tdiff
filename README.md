@@ -13,6 +13,7 @@ module.
 ## Features
 
 * Provides the {TDiff} mixin.
+* Provides the {TDiff::Unordered} mixin for unordered diffing.
 * Allows custom node equality and traversal logic by overriding the
   {TDiff#tdiff_equal} and {TDiff#tdiff_each_child} methods.
 * Implements the [Longest Common Subsequence (LCS)](http://en.wikipedia.org/wiki/Longest_common_subsequence_problem) algorithm.
