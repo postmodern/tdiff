@@ -47,7 +47,9 @@ describe TDiff do
   end
 
   it "should tell if two trees are identical" do
-    @tree.tdiff(@tree).to_a.should be_empty
+    @tree.tdiff(@tree).all? { |change,node|
+      change == ' '
+    }.should == true
   end
 
   it "should stop if the root nodes have changed" do
@@ -63,7 +65,7 @@ describe TDiff do
   end
 
   it "should tell when sub-nodes are added" do
-    changes = @tree.tdiff(@added).to_a
+    changes = @tree.tdiff(@added).select { |change,node| change == '+' }
 
     changes.length.should == 1
     changes[0][0].should == '+'
@@ -71,7 +73,7 @@ describe TDiff do
   end
 
   it "should tell when sub-nodes are removed" do
-    changes = @tree.tdiff(@removed).to_a
+    changes = @tree.tdiff(@removed).select { |change,node| change == '-' }
 
     changes.length.should == 1
     changes[0][0].should == '-'

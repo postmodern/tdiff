@@ -37,7 +37,7 @@ module TDiff
   # @yield [state, node]
   #   The given block will be passed the added or removed nodes.
   #
-  # @yieldparam ['+', '-'] state
+  # @yieldparam [' ', '+', '-'] state
   #   The state-change of the node.
   #
   # @yieldparam [Object] node
@@ -126,7 +126,11 @@ module TDiff
     c = nil
 
     # recurse down through unchanged nodes
-    unchanged.each { |xi,yi| xi.tdiff(yi,&block) }
+    unchanged.each do |xi,yi|
+      yield ' ', xi
+
+      xi.tdiff(yi,&block)
+    end
     unchanged = nil
 
     # sequentially iterate over the changed nodes
