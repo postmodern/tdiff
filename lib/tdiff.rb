@@ -34,10 +34,10 @@ module TDiff
   # @param [#tdiff_each_child] tree
   #   The other tree.
   #
-  # @yield [state, node]
+  # @yield [change, node]
   #   The given block will be passed the added or removed nodes.
   #
-  # @yieldparam [' ', '+', '-'] state
+  # @yieldparam [' ', '+', '-'] change
   #   The state-change of the node.
   #
   # @yieldparam [Object] node
