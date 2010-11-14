@@ -115,13 +115,13 @@ module TDiff
     # explicitly discard the c matrix
     c = nil
 
-    # recurse down through unchanged nodes
-    unchanged.each { |x,y| x.tdiff(y,&block) }
-    unchanged = nil
-
     # sequentially iterate over the changed nodes
     changes.each(&block)
     changes = nil
+
+    # recurse down through unchanged nodes
+    unchanged.each { |x,y| x.tdiff(y,&block) }
+    unchanged = nil
 
     return self
   end
