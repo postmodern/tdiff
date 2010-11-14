@@ -10,6 +10,13 @@ Calculates the differences between two tree-like structures. Similar to
 Rubys built-in [TSort](http://rubydoc.info/docs/ruby-stdlib/1.9.2/TSort)
 module.
 
+## Features
+
+* Provides the {TDiff} mixin.
+* Allows custom node equality and traversal logic by overriding the
+  {TDiff#tdiff_equal} and {TDiff#tdiff_each_child} methods.
+* Implements the [Longest Common Subsequence (LCS)](http://en.wikipedia.org/wiki/Longest_common_subsequence_problem).
+
 ## Examples
 
 Diff two HTML documents:
