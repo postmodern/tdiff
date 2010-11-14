@@ -1,5 +1,3 @@
-require 'pp'
-
 module TDiff
   #
   # Default method which will enumerate over every child of a parent node.
@@ -62,9 +60,9 @@ module TDiff
     x = enum_for(:tdiff_each_child,self)
     y = enum_for(:tdiff_each_child,tree)
 
-    x.each_with_index do |x_node,i|
-      y.each_with_index do |y_node,j|
-        c[i][j] = if tdiff_equal(x_node,y_node)
+    x.each_with_index do |xi,i|
+      y.each_with_index do |yi,j|
+        c[i][j] = if tdiff_equal(xi,yi)
                     c[i-1][j-1] + 1
                   else
                     if c[i][j-1] > c[i-1][j]
@@ -76,31 +74,50 @@ module TDiff
       end
     end
 
-    pp c
-
+    unchanged = []
     changes = []
 
-    x_backtrack = x.reverse_each.each_with_index
-    y_backtrack = y.reverse_each.each_with_index
+    x_backtrack = x.each_with_index.reverse_each
+    y_backtrack = y.each_with_index.reverse_each
 
-    x_node, i = x_backtrack.next
-    y_node, j = y_backtrack.next
+    xi, i = begin
+              x_backtrack.next
+            rescue StopIteration
+            end
+
+    yi, j = begin
+              y_backtrack.next
+            rescue StopIteration
+            end
+
+    # handle single child edge-cases
+    if (xi.nil? || yi.nil?)
+      if (xi.nil? && yi)
+        yield '+', yi
+      elsif (xi && yi.nil?)
+        yield '-', xi
+      end
+
+      return self
+    end
 
     loop do
-      if tdiff_equal(x_node,y_node)
+      if tdiff_equal(xi,yi)
+        unchanged << [xi, yi]
+
         break if (i == 0 && j == 0)
 
-        x_node, i = x_backtrack.next
-        y_node, j = y_backtrack.next
+        xi, i = x_backtrack.next
+        yi, j = y_backtrack.next
       else
         if (j > 0 && (i == 0 || c[i][j-1] >= c[i-1][j]))
-          changes.unshift(['+', y_node])
+          changes.unshift(['+', yi])
 
-          y_node, j = y_backtrack.next
+          yi, j = y_backtrack.next
         elsif (i > 0 && (j == 0 || c[i][j-1] < c[i-1][j]))
-          changes.unshift(['-', x_node])
+          changes.unshift(['-', xi])
 
-          x_node, i = x_backtrack.next
+          xi, i = x_backtrack.next
         end
       end
     end
@@ -108,8 +125,14 @@ module TDiff
     # explicitly discard the c matrix
     c = nil
 
+    # recurse down through unchanged nodes
+    unchanged.each { |xi,yi| xi.tdiff(yi,&block) }
+    unchanged = nil
+
     # sequentially iterate over the changed nodes
     changes.each(&block)
+    changes = nil
+
     return self
   end
 end
