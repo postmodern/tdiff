@@ -116,7 +116,7 @@ module TDiff
     c = nil
 
     # recurse down through unchanged nodes
-    unchanged.each { |xi,yi| xi.tdiff(yi,&block) }
+    unchanged.each { |x,y| x.tdiff(y,&block) }
     unchanged = nil
 
     # sequentially iterate over the changed nodes
