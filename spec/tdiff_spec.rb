@@ -84,13 +84,13 @@ describe TDiff do
     changes = @tree.tdiff(@changed_order).to_a
 
     changes.length.should == 4
-    changes[0][0].should == '-'
-    changes[0][1].should == @tree.children[0]
+    changes[0][0].should == ' '
+    changes[0][1].should == @tree.children[1].children[0]
 
-    changes[1][0].should == '+'
-    changes[1][1].should == @changed_order.children[0]
+    changes[1][0].should == '-'
+    changes[1][1].should == @tree.children[0]
 
-    changes[2][0].should == '-'
+    changes[2][0].should == ' '
     changes[2][1].should == @tree.children[1]
 
     changes[3][0].should == '+'
