@@ -6,11 +6,13 @@ describe TDiff do
   before(:all) do
     @tree = Node.new('root', [
       Node.new('leaf1', [
-        Node.new('subleaf1', [])
+        Node.new('subleaf1', []),
+        Node.new('subleaf2', [])
       ]),
 
       Node.new('leaf2', [
-        Node.new('subleaf1', [])
+        Node.new('subleaf1', []),
+        Node.new('subleaf2', [])
       ])
     ])
 
@@ -19,29 +21,36 @@ describe TDiff do
     @added = Node.new('root', [
       Node.new('leaf1', [
         Node.new('subleaf1', []),
+        Node.new('subleaf3', []),
         Node.new('subleaf2', [])
       ]),
 
       Node.new('leaf2', [
-        Node.new('subleaf1', [])
+        Node.new('subleaf1', []),
+        Node.new('subleaf2', [])
       ])
     ])
 
     @removed = Node.new('root', [
-      Node.new('leaf1', []),
+      Node.new('leaf1', [
+        Node.new('subleaf1', [])
+      ]),
 
       Node.new('leaf2', [
-        Node.new('subleaf1', [])
+        Node.new('subleaf1', []),
+        Node.new('subleaf2', [])
       ])
     ])
 
     @changed_order = Node.new('root', [
       Node.new('leaf2', [
-        Node.new('subleaf1', [])
+        Node.new('subleaf1', []),
+        Node.new('subleaf2', [])
       ]),
 
       Node.new('leaf1', [
-        Node.new('subleaf1', [])
+        Node.new('subleaf1', []),
+        Node.new('subleaf2', [])
       ])
     ])
   end
@@ -77,23 +86,26 @@ describe TDiff do
 
     changes.length.should == 1
     changes[0][0].should == '-'
-    changes[0][1].should == @tree.children[0].children[0]
+    changes[0][1].should == @tree.children[0].children[1]
   end
 
   it "should detect when the order of children has changed" do
     changes = @tree.tdiff(@changed_order).to_a
 
-    changes.length.should == 4
+    changes.length.should == 5
     changes[0][0].should == ' '
     changes[0][1].should == @tree.children[1].children[0]
 
-    changes[1][0].should == '-'
-    changes[1][1].should == @tree.children[0]
+    changes[1][0].should == ' '
+    changes[1][1].should == @tree.children[1].children[1]
 
-    changes[2][0].should == ' '
-    changes[2][1].should == @tree.children[1]
+    changes[2][0].should == '-'
+    changes[2][1].should == @tree.children[0]
 
-    changes[3][0].should == '+'
-    changes[3][1].should == @changed_order.children[1]
+    changes[3][0].should == ' '
+    changes[3][1].should == @tree.children[1]
+
+    changes[4][0].should == '+'
+    changes[4][1].should == @changed_order.children[1]
   end
 end
