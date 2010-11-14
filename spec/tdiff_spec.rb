@@ -1,27 +1,12 @@
 require 'spec_helper'
 require 'helpers/trees'
+require 'tdiff_examples'
 require 'tdiff/tdiff'
 
 describe TDiff do
   include Helpers::Trees
 
-  it "should tell if two trees are identical" do
-    @tree.tdiff(@tree).all? { |change,node|
-      change == ' '
-    }.should == true
-  end
-
-  it "should stop if the root nodes have changed" do
-    changes = @tree.tdiff(@different_root).to_a
-
-    changes.length.should == 2
-
-    changes[0][0].should == '-'
-    changes[0][1].should == @tree
-
-    changes[1][0].should == '+'
-    changes[1][1].should == @different_root
-  end
+  it_should_behave_like 'TDiff', :tdiff
 
   it "should tell when sub-nodes are added" do
     changes = @tree.tdiff(@added).select { |change,node| change == '+' }
