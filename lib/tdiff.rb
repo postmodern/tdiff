@@ -1,3 +1,8 @@
+#
+# {TDiff} adds the ability to calculate the differences between two tree-like
+# objects. Simply include {TDiff} into the class which represents the tree
+# nodes and define the {#tdiff_each_child} and {#tdiff_equal} methods.
+#
 module TDiff
   #
   # Default method which will enumerate over every child of a parent node.
@@ -13,7 +18,7 @@ module TDiff
   end
 
   #
-  # Compares two nodes.
+  # Default method which compares two nodes.
   #
   # @param [Object] original_node
   #   A node from the original tree.
