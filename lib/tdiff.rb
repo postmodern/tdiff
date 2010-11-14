@@ -80,44 +80,34 @@ module TDiff
     x_backtrack = x.each_with_index.reverse_each
     y_backtrack = y.each_with_index.reverse_each
 
-    xi, i = begin
-              x_backtrack.next
-            rescue StopIteration
-            end
-
-    yi, j = begin
-              y_backtrack.next
-            rescue StopIteration
-            end
-
-    # handle single child edge-cases
-    if (xi.nil? || yi.nil?)
-      if (xi.nil? && yi)
-        yield '+', yi
-      elsif (xi && yi.nil?)
-        yield '-', xi
+    next_child = lambda { |children|
+      begin
+        children.next
+      rescue StopIteration
+        # end of iteration, return a -1 index
+        [nil, -1]
       end
+    }
 
-      return self
-    end
+    xi, i = next_child[x_backtrack]
+    yi, j = next_child[y_backtrack]
 
-    loop do
-      if tdiff_equal(xi,yi)
+    until (i == -1 && j == -1)
+      if (i != -1 && j != -1 && tdiff_equal(xi,yi))
+        changes.unshift [' ', xi]
         unchanged << [xi, yi]
 
-        break if (i == 0 && j == 0)
-
-        xi, i = x_backtrack.next
-        yi, j = y_backtrack.next
+        xi, i = next_child[x_backtrack]
+        yi, j = next_child[y_backtrack]
       else
-        if (j > 0 && (i == 0 || c[i][j-1] >= c[i-1][j]))
-          changes.unshift(['+', yi])
+        if (j >= 0 && (i == -1 || c[i][j-1] >= c[i-1][j]))
+          changes.unshift ['+', yi]
 
-          yi, j = y_backtrack.next
-        elsif (i > 0 && (j == 0 || c[i][j-1] < c[i-1][j]))
-          changes.unshift(['-', xi])
+          yi, j = next_child[y_backtrack]
+        elsif (i >= 0 && (j == -1 || c[i][j-1] < c[i-1][j]))
+          changes.unshift ['-', xi]
 
-          xi, i = x_backtrack.next
+          xi, i = next_child[x_backtrack]
         end
       end
     end
@@ -126,11 +116,7 @@ module TDiff
     c = nil
 
     # recurse down through unchanged nodes
-    unchanged.each do |xi,yi|
-      yield ' ', xi
-
-      xi.tdiff(yi,&block)
-    end
+    unchanged.each { |xi,yi| xi.tdiff(yi,&block) }
     unchanged = nil
 
     # sequentially iterate over the changed nodes
