@@ -1,59 +1,9 @@
 require 'spec_helper'
-require 'classes/node'
-require 'tdiff'
+require 'helpers/trees'
+require 'tdiff/tdiff'
 
 describe TDiff do
-  before(:all) do
-    @tree = Node.new('root', [
-      Node.new('leaf1', [
-        Node.new('subleaf1', []),
-        Node.new('subleaf2', [])
-      ]),
-
-      Node.new('leaf2', [
-        Node.new('subleaf1', []),
-        Node.new('subleaf2', [])
-      ])
-    ])
-
-    @different_root = Node.new('wrong', [])
-
-    @added = Node.new('root', [
-      Node.new('leaf1', [
-        Node.new('subleaf1', []),
-        Node.new('subleaf3', []),
-        Node.new('subleaf2', [])
-      ]),
-
-      Node.new('leaf2', [
-        Node.new('subleaf1', []),
-        Node.new('subleaf2', [])
-      ])
-    ])
-
-    @removed = Node.new('root', [
-      Node.new('leaf1', [
-        Node.new('subleaf1', [])
-      ]),
-
-      Node.new('leaf2', [
-        Node.new('subleaf1', []),
-        Node.new('subleaf2', [])
-      ])
-    ])
-
-    @changed_order = Node.new('root', [
-      Node.new('leaf2', [
-        Node.new('subleaf1', []),
-        Node.new('subleaf2', [])
-      ]),
-
-      Node.new('leaf1', [
-        Node.new('subleaf1', []),
-        Node.new('subleaf2', [])
-      ])
-    ])
-  end
+  include Helpers::Trees
 
   it "should tell if two trees are identical" do
     @tree.tdiff(@tree).all? { |change,node|
