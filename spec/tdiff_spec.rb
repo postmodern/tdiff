@@ -8,22 +8,6 @@ describe TDiff do
 
   it_should_behave_like 'TDiff', :tdiff
 
-  it "should tell when sub-nodes are added" do
-    changes = @tree.tdiff(@added).select { |change,node| change == '+' }
-
-    changes.length.should == 1
-    changes[0][0].should == '+'
-    changes[0][1].should == @added.children[0].children[1]
-  end
-
-  it "should tell when sub-nodes are removed" do
-    changes = @tree.tdiff(@removed).select { |change,node| change == '-' }
-
-    changes.length.should == 1
-    changes[0][0].should == '-'
-    changes[0][1].should == @tree.children[0].children[1]
-  end
-
   it "should detect when the order of children has changed" do
     changes = @tree.tdiff(@changed_order).to_a
 
