@@ -46,7 +46,7 @@ Diff two HTML documents:
       puts "#{change} #{node.to_html}".ljust(30) + node.parent.path
     end
 
-Output:
+### Output
 
     + <p>one</p>                  /html/body/div
     +                             /html/body/div
