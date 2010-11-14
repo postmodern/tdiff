@@ -67,13 +67,17 @@ module TDiff
         end
       end
 
-      # explicitly release the unchanged variable
-      unchanged = nil
-
       # order the changes by index to match the behavior of `tdiff`
       changes.sort_by { |change| change[0] }.each do |index,change,node|
         yield change, node
       end
+
+      # explicitly release the changes variable
+      changes = nil
+
+      # recurse down the unchanged nodes
+      unchanged.each { |xi,yj| xi.tdiff_unordered(yj,&block) }
+      unchanged = nil
 
       return self
     end
