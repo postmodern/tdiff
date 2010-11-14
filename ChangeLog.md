@@ -1,3 +1,7 @@
+### 0.2.0 / 2010-11-14
+
+* Added {TDiff::Unordered}.
+
 ### 0.1.0 / 2010-11-13
 
 * Initial release:
