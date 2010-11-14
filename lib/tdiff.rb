@@ -95,7 +95,7 @@ module TDiff
     until (i == -1 && j == -1)
       if (i != -1 && j != -1 && tdiff_equal(xi,yi))
         changes.unshift [' ', xi]
-        unchanged << [xi, yi]
+        unchanged.unshift [xi, yi]
 
         xi, i = next_child[x_backtrack]
         yi, j = next_child[y_backtrack]
