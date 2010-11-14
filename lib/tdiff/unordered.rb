@@ -6,6 +6,9 @@ module TDiff
   # order of children nodes.
   #
   module Unordered
+    #
+    # Includes {TDiff}.
+    #
     def self.included(base)
       base.send :include, TDiff
     end
