@@ -9,8 +9,8 @@ class Node < Struct.new(:name, :children)
     node.children.each(&block)
   end
 
-  def tdiff_equal(node1,node2)
-    node1.name == node2.name
+  def tdiff_equal(node)
+    self.name == node.name
   end
 
 end

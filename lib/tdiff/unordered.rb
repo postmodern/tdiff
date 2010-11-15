@@ -38,7 +38,7 @@ module TDiff
       return enum_for(:tdiff_unordered,tree) unless block
 
       # check if the nodes differ
-      unless tdiff_equal(self,tree)
+      unless tdiff_equal(tree)
         yield '-', self
         yield '+', tree
         return self
@@ -52,7 +52,7 @@ module TDiff
 
       x.each_with_index do |xi,i|
         y.each_with_index do |yj,j|
-          if (!unchanged.has_value?(yj) && tdiff_equal(xi,yj))
+          if (!unchanged.has_value?(yj) && xi.tdiff_equal(yj))
             unchanged[xi] = yj
             changes << [i, ' ', xi]
             break

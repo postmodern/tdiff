@@ -18,19 +18,16 @@ module TDiff
   end
 
   #
-  # Default method which compares two nodes.
+  # Default method which compares nodes.
   #
-  # @param [Object] original_node
-  #   A node from the original tree.
-  #
-  # @param [Object] new_node
+  # @param [Object] node
   #   A node from the new tree.
   #
   # @return [Boolean]
-  #   Specifies whether the two nodes are equal.
+  #   Specifies whether the nodes are equal.
   #
-  def tdiff_equal(original_node,new_node)
-    original_node == new_node
+  def tdiff_equal(node)
+    self == node
   end
 
   #
@@ -55,7 +52,7 @@ module TDiff
     return enum_for(:tdiff,tree) unless block
 
     # check if the nodes differ
-    unless tdiff_equal(self,tree)
+    unless tdiff_equal(tree)
       yield '-', self
       yield '+', tree
       return self
@@ -67,7 +64,7 @@ module TDiff
 
     x.each_with_index do |xi,i|
       y.each_with_index do |yj,j|
-        c[i][j] = if tdiff_equal(xi,yj)
+        c[i][j] = if xi.tdiff_equal(yj)
                     c[i-1][j-1] + 1
                   else
                     if c[i][j-1] > c[i-1][j]
@@ -98,7 +95,7 @@ module TDiff
     yj, j = next_child[y_backtrack]
 
     until (i == -1 && j == -1)
-      if (i != -1 && j != -1 && tdiff_equal(xi,yj))
+      if (i != -1 && j != -1 && xi.tdiff_equal(yj))
         changes.unshift [' ', xi]
         unchanged.unshift [xi, yj]
 

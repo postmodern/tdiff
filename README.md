@@ -29,20 +29,20 @@ Diff two HTML documents:
 
       include TDiff
 
-      def tdiff_each_child(node,&block)
-        node.children.each(&block)
-      end
-
-      def tdiff_equal(node1,node2)
-        if (node1.text? && node2.text?)
-          node1.text == node2.text
-        elsif (node1.respond_to?(:root) && node2.respond_to?(:root))
-          tdiff_equal(node1.root,node2.root)
-        elsif (node1.respond_to?(:name) && node2.respond_to?(:name))
-          node1.name == node2.name
+      def tdiff_equal(node)
+        if (self.text? && node.text?)
+          self.text == node.text
+        elsif (self.respond_to?(:root) && node.respond_to?(:root))
+          self.root.tdiff_equal(node.root)
+        elsif (self.respond_to?(:name) && node.respond_to?(:name))
+          self.name == node.name
         else
           false
         end
+      end
+
+      def tdiff_each_child(node,&block)
+        node.children.each(&block)
       end
 
     end
