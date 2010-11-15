@@ -1,3 +1,7 @@
+### 0.3.0 / 2010-11-15
+
+* Changed {TDiff#tdiff_equal} to compare `self` with another node.
+
 ### 0.2.0 / 2010-11-14
 
 * Added {TDiff::Unordered}.
