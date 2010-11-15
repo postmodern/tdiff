@@ -1,5 +1,5 @@
 name: tdiff
-version: 0.2.0
+version: 0.3.0
 summary: Calculates the differences between two tree-like structures.
 description:
   Calculates the differences between two tree-like structures. Similar to
