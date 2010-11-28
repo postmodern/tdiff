@@ -23,7 +23,7 @@ shared_examples_for 'TDiff' do |method|
   end
 
   it "should tell when sub-nodes are added" do
-    changes = @tree.tdiff(@added).select { |change,node| change == '+' }
+    changes = @tree.send(method,@added).select { |change,node| change == '+' }
 
     changes.length.should == 1
     changes[0][0].should == '+'
@@ -31,7 +31,7 @@ shared_examples_for 'TDiff' do |method|
   end
 
   it "should tell when sub-nodes are removed" do
-    changes = @tree.tdiff(@removed).select { |change,node| change == '-' }
+    changes = @tree.send(method,@removed).select { |change,node| change == '-' }
 
     changes.length.should == 1
     changes[0][0].should == '-'
