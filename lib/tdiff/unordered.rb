@@ -65,7 +65,7 @@ module TDiff
       end
 
       y.each_with_index do |yj,j|
-        unless unchanged.has_key?(yj)
+        unless unchanged.has_value?(yj)
           changes << [j, '+', yj]
         end
       end
