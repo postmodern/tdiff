@@ -1,3 +1,11 @@
+### 0.3.2 / 2010-11-28
+
+* Added {TDiff#tdiff_recursive} to only handle recursively traversing
+  and diffing the children nodes.
+* Added {TDiff::Unordered#tdiff_recursive_unordered} to only handle
+  recursively traversing and diffing the children nodes, without respecting
+  the order of the nodes.
+
 ### 0.3.1 / 2010-11-28
 
 * Fixed a typo in {TDiff::Unordered#tdiff_unordered}, which was causing
