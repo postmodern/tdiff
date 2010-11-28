@@ -58,6 +58,32 @@ module TDiff
       return self
     end
 
+    yield ' ', self
+
+    tdiff_recursive(tree,&block)
+    return self
+  end
+
+  protected
+
+  #
+  # Recursively compares the differences between the children nodes.
+  #
+  # @param [#tdiff_each_child] tree
+  #   The other tree.
+  #
+  # @yield [change, node]
+  #   The given block will be passed the added or removed nodes.
+  #
+  # @yieldparam [' ', '+', '-'] change
+  #   The state-change of the node.
+  #
+  # @yieldparam [Object] node
+  #   A node from one of the two trees.
+  #
+  # @since 0.3.2
+  #
+  def tdiff_recursive(tree,&block)
     c = Hash.new { |hash,key| hash[key] = Hash.new(0) }
     x = enum_for(:tdiff_each_child,self)
     y = enum_for(:tdiff_each_child,tree)
@@ -122,9 +148,7 @@ module TDiff
     changes = nil
 
     # recurse down through unchanged nodes
-    unchanged.each { |x,y| x.tdiff(y,&block) }
+    unchanged.each { |x,y| x.tdiff_recursive(y,&block) }
     unchanged = nil
-
-    return self
   end
 end
