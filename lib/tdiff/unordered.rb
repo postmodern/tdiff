@@ -44,6 +44,33 @@ module TDiff
         return self
       end
 
+      yield ' ', self
+
+      tdiff_recursive_unordered(tree,&block)
+      return self
+    end
+
+    protected
+
+    #
+    # Recursively compares the differences between the children nodes,
+    # not respecting the ordering of children.
+    #
+    # @param [#tdiff_each_child] tree
+    #   The other tree.
+    #
+    # @yield [change, node]
+    #   The given block will be passed the added or removed nodes.
+    #
+    # @yieldparam [' ', '+', '-'] change
+    #   The state-change of the node.
+    #
+    # @yieldparam [Object] node
+    #   A node from one of the two trees.
+    #
+    # @since 0.3.2
+    #
+    def tdiff_recursive_unordered(tree,&block)
       x = enum_for(:tdiff_each_child,self)
       y = enum_for(:tdiff_each_child,tree)
 
@@ -79,10 +106,11 @@ module TDiff
       changes = nil
 
       # recurse down the unchanged nodes
-      unchanged.each { |xi,yj| xi.tdiff_unordered(yj,&block) }
-      unchanged = nil
+      unchanged.each do |xi,yj|
+        xi.tdiff_recursive_unordered(yj,&block)
+      end
 
-      return self
+      unchanged = nil
     end
   end
 end
