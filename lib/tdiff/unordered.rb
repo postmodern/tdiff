@@ -15,7 +15,7 @@ module TDiff
 
     #
     # Finds the differences between `self` and another tree, not respecting
-    # the ordering of children.
+    # the order of the nodes.
     #
     # @param [#tdiff_each_child] tree
     #   The other tree.
@@ -54,7 +54,7 @@ module TDiff
 
     #
     # Recursively compares the differences between the children nodes,
-    # not respecting the ordering of children.
+    # not respecting the order of the nodes.
     #
     # @param [#tdiff_each_child] tree
     #   The other tree.
