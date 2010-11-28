@@ -1,3 +1,8 @@
+### 0.3.1 / 2010-11-28
+
+* Fixed a typo in {TDiff::Unordered#tdiff_unordered}, which was causing
+  all nodes to be marked as added.
+
 ### 0.3.0 / 2010-11-15
 
 * Changed {TDiff#tdiff_equal} to compare `self` with another node.
