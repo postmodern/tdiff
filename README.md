@@ -65,6 +65,10 @@ Diff two HTML documents:
     + two                         /html/body/div/p[2]
       three                       /html/body/div/p[2]
 
+## Requirements
+
+* [ruby](http://www.ruby-lang.org/) >= 1.8.7
+
 ## Install
 
     $ gem install tdiff
