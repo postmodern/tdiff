@@ -1,3 +1,10 @@
+### 0.3.3 / 2012-05-28
+
+* Require ruby >= 1.8.7.
+* Added {TDiff::VERSION}.
+* Replaced ore-tasks with
+  [rubygems-tasks](https://github.com/postmodern/rubygems-tasks#readme).
+
 ### 0.3.2 / 2010-11-28
 
 * Added {TDiff#tdiff_recursive} to only handle recursively traversing
