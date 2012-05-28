@@ -1,6 +1,6 @@
 require 'spec_helper'
-require 'helpers/trees'
 require 'tdiff_examples'
+
 require 'tdiff/tdiff'
 
 describe TDiff do

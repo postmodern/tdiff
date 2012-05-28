@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'helpers/trees'
 require 'tdiff/unordered'
 
 describe TDiff::Unordered do
