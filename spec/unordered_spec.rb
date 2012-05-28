@@ -1,4 +1,6 @@
 require 'spec_helper'
+require 'tdiff_examples'
+
 require 'tdiff/unordered'
 
 describe TDiff::Unordered do
