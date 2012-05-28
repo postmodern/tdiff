@@ -8,7 +8,7 @@ description:
 license: MIT
 authors: Postmodern
 email: postmodern.mod3@gmail.com
-homepage: https://github.com/postmodern/tdiff
+homepage: https://github.com/postmodern/tdiff#readme
 has_yard: true
 
 required_ruby_version: ">= 1.8.7"
