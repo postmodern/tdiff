@@ -1,7 +1,7 @@
 # TDiff
 
-* [Source](http://github.com/postmodern/tdiff)
-* [Issues](http://github.com/postmodern/tdiff/issues)
+* [Source](https://github.com/postmodern/tdiff)
+* [Issues](https://github.com/postmodern/tdiff/issues)
 * Postmodern (postmodern.mod3 at gmail.com)
 
 ## Description
