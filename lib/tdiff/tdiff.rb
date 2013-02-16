@@ -148,7 +148,7 @@ module TDiff
     changes = nil
 
     # recurse down through unchanged nodes
-    unchanged.each { |x,y| x.tdiff_recursive(y,&block) }
+    unchanged.each { |a,b| a.tdiff_recursive(b,&block) }
     unchanged = nil
   end
 end
