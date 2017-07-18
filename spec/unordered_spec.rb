@@ -11,7 +11,7 @@ describe TDiff::Unordered do
       include TDiff::Unordered
     end
 
-    base.should include(TDiff)
+    expect(base).to include(TDiff)
   end
 
   it_should_behave_like 'TDiff', :tdiff_unordered
@@ -21,6 +21,6 @@ describe TDiff::Unordered do
       change != ' '
     end
 
-    changes.should be_empty
+    expect(changes).to be_empty
   end
 end
