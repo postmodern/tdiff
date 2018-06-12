@@ -1,3 +1,7 @@
+### 0.3.4 / 2018-06-11
+
+* Fixed shadowed variable warning (@bhollis).
+
 ### 0.3.3 / 2012-05-28
 
 * Require ruby >= 1.8.7.
