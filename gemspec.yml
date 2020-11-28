@@ -13,4 +13,4 @@ has_yard: true
 required_ruby_version: ">= 1.8.7"
 
 development_dependencies:
-  bundler: ~> 1.0
+  bundler: ~> 2.0
