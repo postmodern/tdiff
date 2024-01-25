@@ -2,6 +2,7 @@
 
 * [Source](https://github.com/postmodern/tdiff)
 * [Issues](https://github.com/postmodern/tdiff/issues)
+* [Documentation](https://rubydoc.info/gems/tdiff)
 
 ## Description
 
