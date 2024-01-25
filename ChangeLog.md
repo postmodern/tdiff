@@ -1,3 +1,8 @@
+### 0.4.0 / 2024-01-24
+
+* Switched to using `require_relative` to improve load-times.
+* Added `# frozen_string_literal: true` to all files.
+
 ### 0.3.4 / 2018-06-11
 
 * Fixed shadowed variable warning (@bhollis).
