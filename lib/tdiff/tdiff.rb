@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # {TDiff} adds the ability to calculate the differences between two tree-like
 # objects. Simply include {TDiff} into the class which represents the tree
