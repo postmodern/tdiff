@@ -1,5 +1,7 @@
 # TDiff
 
+[![CI](https://github.com/postmodern/tdiff/actions/workflows/ruby.yml/badge.svg)](https://github.com/postmodern/tdiff/actions/workflows/ruby.yml)
+
 * [Source](https://github.com/postmodern/tdiff)
 * [Issues](https://github.com/postmodern/tdiff/issues)
 * [Documentation](https://rubydoc.info/gems/tdiff)
