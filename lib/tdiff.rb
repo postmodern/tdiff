@@ -1,3 +1,3 @@
-require 'tdiff/tdiff'
-require 'tdiff/unordered'
-require 'tdiff/version'
+require_relative 'tdiff/tdiff'
+require_relative 'tdiff/unordered'
+require_relative 'tdiff/version'

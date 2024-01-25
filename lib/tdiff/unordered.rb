@@ -1,4 +1,4 @@
-require 'tdiff/tdiff'
+require_relative 'tdiff'
 
 module TDiff
   #
